@@ -1,19 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// !TODO: Remove logo from project
-import logo from "../../logo.svg";
-import Loader from "../Loader";
 
 import {
   clearList,
   fetchRepositoryListByUser,
 } from "../../slices/repositoryList";
-import RepositoryCard from "../RepositoryCard";
 
-const UserForm: React.FC<{}> = () => {
-  const dispatch = useDispatch();
-  const { loading, repositories } = useSelector((x) => x.repositoriesReducer);
+import "./UserForm.css";
+
+type PropsFromReduxWrapper = {
+  clearList: () => void;
+  fetchRepositories: (username: string) => void;
+  loading: boolean;
+};
+
+const UserForm: React.FC<PropsFromReduxWrapper> = ({
+  clearList,
+  fetchRepositories,
+  loading,
+}) => {
   const [inputValue, setInputValue] = useState("");
+  React.useEffect(() => {
+    const username = new URLSearchParams(window.location.search).get(
+      "username"
+    );
+    if (username) {
+      fetchRepositories(username);
+    }
+  }, [fetchRepositories]);
+
   const handleUserInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -21,56 +36,50 @@ const UserForm: React.FC<{}> = () => {
   };
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (form) => {
     form.preventDefault();
-    dispatch(fetchRepositoryListByUser(inputValue));
-  };
-  const handleListClear: React.MouseEventHandler<HTMLButtonElement> = () => {
-    dispatch(clearList());
-    console.log(clearList());
+    fetchRepositories(inputValue);
   };
 
   return (
-    <div>
-      <header className="App-header">
-        <h1>The very cool github user repositories finder</h1>
-      </header>
-      <Loader loading={loading}>
-        <div>
-          <form action="" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="user"
-              value={inputValue}
-              onChange={handleUserInputChange}
-            />
-            <button>Search</button>
-            <button type="button" onClick={handleListClear}>
-              Clear
-            </button>
-          </form>
-          {/* turn this into component */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "20px",
-              padding: "0 20%",
-              flexWrap: "wrap",
-              marginTop: "50px",
-            }}
-          >
-            {repositories.map((repository: any) => (
-              <RepositoryCard
-                forks={repository.forks_count}
-                name={repository.name}
-                stars={repository.stargazers_count}
-                url={repository.html_url}
-              />
-            ))}
-          </div>
+    <div className="user-form">
+      <form onSubmit={handleSubmit} className="user-form__form">
+        <input
+          className="user-form__controls"
+          type="text"
+          name="username"
+          placeholder="Enter a github username"
+          value={inputValue}
+          onChange={handleUserInputChange}
+        />
+        <div className="user-form__controls user-form-controls__button-container">
+          <button disabled={loading || inputValue.length <= 0}>Search</button>
+          <button disabled={loading} type="button" onClick={clearList}>
+            Clear
+          </button>
         </div>
-      </Loader>
+      </form>
     </div>
   );
 };
 
-export default UserForm;
+const UserFormWithReduxData: React.FC = () => {
+  const dispatch = useDispatch();
+  const { loading } = useSelector((x) => x.repositoriesReducer);
+
+  const fetchRepositories = useCallback(
+    (username: string) => dispatch(fetchRepositoryListByUser(username)),
+    [dispatch]
+  );
+
+  const clearListFromRedux = () => {
+    dispatch(clearList());
+  };
+  return (
+    <UserForm
+      clearList={clearListFromRedux}
+      fetchRepositories={fetchRepositories}
+      loading={loading}
+    />
+  );
+};
+
+export default UserFormWithReduxData;

@@ -1,7 +1,27 @@
-# Getting Started with Create React App
+# Github repositories finder 👨‍✈️👩‍✈️
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+This project allows the user to enter a Github username and search its public repositories using the Github public API
 
+## How to run it
+### Pre-requisites: 
+1- node version 12 or higher
+2- npm version 6.14.5 or higher
+3- Cypress - This project uses version 6.8.0 so a newish version of their GUI should be ok
+### To run the project:
+1- Clone this project
+2- In the project's directory run `npm install`
+3- After `npm install` is done, in the same directory run `npm start`
+### To run the tests:
+1- Have the project running in another terminal session
+2- Run `npm run cypress:open`
+3- When the GUI opens, click on `search.spec.js` under `INTEGRATION TESTS`
+- If you have any troubles running cypress, refer to the `npm run cypress:open` section inside Available Scripts of this README
+## Tech stack
+- React
+- Redux toolkit
+- Cypress
+- CSS
 ## Available Scripts
 
 In the project directory, you can run:
@@ -14,10 +34,13 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+### `npm run cypress:open`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Launches the cypress test runner, opening the cypress GUI. Make sure the project’s local server is running beforehand
+
+- Be careful when running the tests as the GitHub public API has limited request per hour. Refer to this page for more information https://docs.github.com/en/developers/apps/rate-limits-for-github-apps#:~:text=Normal%20server%2Dto%2Dserver%20rate,per%20hour%20for%20each%20user.
+
+To run cypress make sure you have it installed correctly following [this guide](https://docs.cypress.io/guides/getting-started/installing-cypress)
 
 ### `npm run build`
 
@@ -39,8 +62,13 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+# Getting Started with Create React App
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+

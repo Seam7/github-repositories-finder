@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./Loader.css";
+
 type LoaderProps = {
   loading: boolean;
   children: React.ReactNode;
@@ -8,18 +10,18 @@ type LoaderProps = {
 // Loader svg credit to Nikhil Krishnan https://codepen.io/nikhil8krishnan/pen/rVoXJaCodePen
 const Loader: React.FC<LoaderProps> = ({ children, loading }) => {
   return (
-    <div>
+    <>
       {loading ? (
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div className="loader">
           <svg
+            className="loader__svg"
             version="1.1"
             id="L9"
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
             y="0px"
             viewBox="0 0 100 100"
-            enable-background="new 0 0 0 0"
-            style={{ width: "100px", height: "100px" }}
+            enableBackground="new 0 0 0 0"
           >
             <path
               fill="#fff"
@@ -40,7 +42,7 @@ const Loader: React.FC<LoaderProps> = ({ children, loading }) => {
       ) : (
         children
       )}
-    </div>
+    </>
   );
 };
 

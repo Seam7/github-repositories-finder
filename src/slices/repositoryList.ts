@@ -1,9 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+export type GithubRepository = {
+  forks_count: number;
+  stargazers_count: number;
+  html_url: string;
+  name: string;
+  [key: string]: any;
+};
 export type RootState = {
   loading: boolean;
-  // !TODO: Add github return type
-  repositories: any[];
+  repositories: GithubRepository[];
 };
 
 const initialState: RootState = {
@@ -11,13 +17,11 @@ const initialState: RootState = {
   repositories: [],
 };
 
-// !TODO: Add github type to createAsyncThunk generic
-// !TODO: Handle fetch failure (400, 401 etc) and generic failure (500)
 export const fetchRepositoryListByUser = createAsyncThunk(
   "repositoryList/getList",
   async (username: string, _thunkAPI) => {
+    window.history.pushState({}, "", `?username=${username}`);
     const response = await fetch(
-      // `https://pokeapi.co/api/v2/pokemon/${username}`
       `https://api.github.com/users/${username}/repos`
     );
     const data = await response.json();
@@ -25,13 +29,19 @@ export const fetchRepositoryListByUser = createAsyncThunk(
   }
 );
 
+export const clearList = createAsyncThunk("repositoryList/clearList", () => {
+  window.history.pushState({}, "", "/");
+});
+
 export const repositoryListSlice = createSlice({
   name: "repositoryList",
   initialState,
-  reducers: {
-    clearList: (state: RootState) => ({ ...state, repositories: [] }),
-  },
+  reducers: {},
   extraReducers: {
+    [clearList.fulfilled.type]: (state) => ({
+      ...state,
+      repositories: [],
+    }),
     [fetchRepositoryListByUser.pending.type]: (state) => ({
       ...state,
       loading: true,
@@ -42,5 +52,3 @@ export const repositoryListSlice = createSlice({
     }),
   },
 });
-
-export const { clearList } = repositoryListSlice.actions;
