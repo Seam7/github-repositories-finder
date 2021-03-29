@@ -38,7 +38,7 @@ You will also see any lint errors in the console.
 
 Launches the cypress test runner, opening the cypress GUI. Make sure the project’s local server is running beforehand
 
-- Be careful when running the tests as the GitHub public API has limited request per hour. Refer to this page for more information https://docs.github.com/en/developers/apps/rate-limits-for-github-apps#:~:text=Normal%20server%2Dto%2Dserver%20rate,per%20hour%20for%20each%20user.
+- Be careful when running the tests as the GitHub public API has limited request per hour. Refer to this page for more information https://docs.github.com/en/developers/apps/rate-limits-for-github-apps#user-to-server-requests.
 
 To run cypress make sure you have it installed correctly following [this guide](https://docs.cypress.io/guides/getting-started/installing-cypress)
 
