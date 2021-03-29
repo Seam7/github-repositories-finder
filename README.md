@@ -1,21 +1,21 @@
 # Github repositories finder 👨‍✈️👩‍✈️
 
 ## Overview
-This project allows the user to enter a Github username and search its public repositories using the Github public API
+This project allows the user to enter a Github username or pass a query parameter in the form of `/?username={githubs_username}` and search its public repositories using the Github public API
 
 ## How to run it
 ### Pre-requisites: 
-1- node version 12 or higher
-2- npm version 6.14.5 or higher
-3- Cypress - This project uses version 6.8.0 so a newish version of their GUI should be ok
+1. node version 12 or higher
+2. npm version 6.14.5 or higher
+3. Cypress - This project uses version 6.8.0 so a newish version of their GUI should be ok
 ### To run the project:
-1- Clone this project
-2- In the project's directory run `npm install`
-3- After `npm install` is done, in the same directory run `npm start`
+1. Clone this project
+2. In the project's directory run `npm install`
+3. After `npm install` is done, in the same directory run `npm start`
 ### To run the tests:
-1- Have the project running in another terminal session
-2- Run `npm run cypress:open`
-3- When the GUI opens, click on `search.spec.js` under `INTEGRATION TESTS`
+1. Have the project running in another terminal session
+2. Run `npm run cypress:open`
+3. When the GUI opens, click on `search.spec.js` under `INTEGRATION TESTS`
 - If you have any troubles running cypress, refer to the `npm run cypress:open` section inside Available Scripts of this README
 ## Tech stack
 - React
